@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>거제도 1박 2일 가족 맛집투어</title>
+  <style>
+    :root {
+      --navy: #24445c;
+      --blue: #eaf4f8;
+      --sky: #d8edf3;
+      --mint: #e5f2ed;
+      --sand: #fbf5e9;
+      --text: #26333b;
+      --muted: #6d7b82;
+      --line: #d8e1e4;
+      --white: #ffffff;
+      --accent: #d97b5f;
+      --shadow: 0 8px 24px rgba(36, 68, 92, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: #f5f8f8;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR",
+        "Apple SD Gothic Neo", sans-serif;
+      line-height: 1.6;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 5vw;
+      background: rgba(255, 255, 255, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand {
+      color: var(--navy);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .actions,
+    .map-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    button {
+      min-height: 42px;
+      border: 0;
+      border-radius: 10px;
+      padding: 9px 13px;
+      color: var(--navy);
+      background: var(--blue);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    button:hover {
+      filter: brightness(0.97);
+    }
+
+    .danger {
+      color: #93472f;
+      background: #f9e8e2;
+    }
+
+    .hero {
+      padding: 60px 5vw 42px;
+      background: linear-gradient(
+        135deg,
+        rgba(216, 237, 243, 0.94),
+        rgba(229, 242, 237, 0.9)
+      );
+    }
+
+    .hero-inner,
+    main {
+      width: min(1080px, 90vw);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 0.86rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 12px;
+      color: var(--navy);
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      line-height: 1.15;
+      letter-spacing: -0.07em;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 0;
+      color: #46616c;
+      font-size: 1.05rem;
+    }
+
+    main {
+      padding: 28px 0 70px;
+    }
+
+    .section {
+      margin-bottom: 22px;
+      padding: 24px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 1.3rem;
+      letter-spacing: -0.04em;
+    }
+
+    .number {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      color: var(--white);
+      background: var(--navy);
+      border-radius: 50%;
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: var(--text);
+      background: #fcfefe;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #7fb8c5;
+      box-shadow: 0 0 0 3px rgba(127, 184, 197, 0.16);
+    }
+
+    .note {
+      margin: 12px 0;
+      padding: 12px 14px;
+      color: #52656b;
+      background: var(--sand);
+      border-radius: 10px;
+      font-size: 0.9rem;
+    }
+
+    .place-card,
+    .restaurant-card {
+      margin-bottom: 14px;
+      padding: 16px;
+      background: #f8fbfb;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+
+    .place-heading,
+    .restaurant-heading {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .place-heading h3,
+    .restaurant-heading h3 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 1rem;
+    }
+
+    .badge {
+      padding: 3px 8px;
+      color: #397080;
+      background: var(--sky);
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    .map-actions {
+      margin-top: 12px;
+    }
+
+    .map-actions button {
+      font-size: 0.84rem;
+    }
+
+    .naver {
+      color: #167443;
+      background: #e4f5e9;
+    }
+
+    .kakao {
+      color: #6d5c00;
+      background: #fff4b8;
+    }
+
+    .google {
+      color: #8b3a3a;
+      background: #f5e8e8;
+    }
+
+    .copy {
+      color: #59458d;
+      background: #eeeaf8;
+    }
+
+    .day-card {
+      margin-bottom: 14px;
+      padding: 18px;
+      background: var(--mint);
+      border-radius: 14px;
+    }
+
+    .day-card h3 {
+      margin-bottom: 12px;
+      color: var(--navy);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 94px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #bdd4d0;
+    }
+
+    .timeline-row:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .timeline-row strong {
+      color: #47727a;
+      font-size: 0.9rem;
+    }
+
+    .schedule-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .schedule-line input {
+      flex: 1;
+    }
+
+    .schedule-line button {
+      white-space: nowrap;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 9px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 11px;
+      background: #f8fbfb;
+      border-radius: 9px;
+    }
+
+    .check-item input {
+      width: auto;
+      accent-color: var(--accent);
+    }
+
+    .footer {
+      padding: 28px 5vw 42px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.86rem;
+    }
+
+    .status {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 20;
+      display: none;
+      max-width: calc(100vw - 36px);
+      padding: 12px 15px;
+      color: #ffffff;
+      background: var(--navy);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+    }
+
+    .status.show {
+      display: block;
+    }
+
+    @media (max-width: 700px) {
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero {
+        padding-top: 42px;
+      }
+
+      .section {
+        padding: 18px;
+      }
+
+      .grid,
+      .grid.three {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .timeline-row {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+
+      .schedule-line {
+        flex-direction: column;
+      }
+
+      .schedule-line button {
+        width: 100%;
+      }
+
+      .map-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .map-actions button {
+        width: 100%;
+        font-size: 0.78rem;
+      }
+    }
+
+    @media print {
+      .topbar,
+      .actions,
+      .map-actions,
+      button {
+        display: none !important;
+      }
+
+      body {
+        background: #ffffff;
+      }
+
+      .hero {
+        padding: 24px 0;
+      }
+
+      .hero-inner,
+      main {
+        width: 100%;
+      }
+
+      .section {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+
+      input,
+      textarea,
+      select {
+        border: 0;
+        padding-left: 0;
+        background: transparent;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">TRAVEL NOTE · 가족 맛집투어 기록지</div>
+    <div class="actions">
+      <button type="button" id="saveButton">저장하기</button>
+      <button type="button" id="printButton">인쇄하기</button>
+      <button type="button" id="resetButton" class="danger">초기화</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">FAMILY TRIP · GEOJE · 2026.12.28–29</p>
+      <h1>거제도 1박 2일</h1>
+      <p>
+        거제 벨버디어를 중심으로 포로수용소, 케이블카, 해변 산책과
+        해산물·회 중심의 가족 맛집투어를 즐기는 여행입니다.
+      </p>
+    </div>
+  </section>
+
+  <main>
+    <section class="section">
+      <div class="section-title">
+        <span class="number">1</span>
+        <h2>여행 기본 정보</h2>
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <label for="region">지역</label>
+          <input id="region" data-save value="거제도">
+        </div>
+
+        <div class="field">
+          <label for="period">기간</label>
+          <input id="period" data-save value="2026년 12월 28일(월) ~ 29일(화), 1박 2일">
+        </div>
+
+        <div class="field">
+          <label for="companions">동행 구성</label>
+          <input id="companions" data-save value="가족 4명 · 배우자, 자녀 2명, 나">
+        </div>
+
+        <div class="field">
+          <label for="transport">이동수단</label>
+          <input id="transport" data-save value="자가용">
+        </div>
+
+        <div class="field">
+          <label for="accommodation">숙소</label>
+          <input id="accommodation" data-save value="한화리조트 거제 벨버디어">
+        </div>
+
+        <div class="field">
+          <label for="budget">예산 및 포함 범위</label>
+          <input id="budget" data-save value="45만 원 · 숙박, 식사, 입장료, 교통비 등">
+        </div>
+
+        <div class="field">
+          <label for="waiting">식당 대기 기준</label>
+          <input id="waiting" data-save value="식당 1곳당 30분 이내">
+        </div>
+
+        <div class="field">
+          <label for="walking">걷는 정도</label>
+          <select id="walking" data-save>
+            <option>가벼운 산책 위주</option>
+            <option selected>보통</option>
+            <option>많이 걷기</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label for="preferences">선호 활동 · 음식 · 가족 조건</label>
+          <textarea id="preferences" data-save>거제도 포로수용소, 케이블카, 해변 걷기, 맛집투어. 해산물·회, 멍게·성게비빔밥, 생선구이·백반, 카페·디저트 선호. 아이들도 매운 음식 가능. 식당은 맛과 현지인 추천을 가장 중요하게 선택.</textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="number">2</span>
+        <h2>확정한 장소와 지도</h2>
+      </div>
+
+      <p class="note">
+        주소를 입력하면 주소를 우선해 지도에서 검색합니다. 주소가 없으면 장소명을 검색어로 사용합니다.
+      </p>
+
+      <div class="place-card">
+        <div class="place-heading">
+          <span class="badge">장소 1</span>
+          <h3>관광지</h3>
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="place1">장소명</label>
+            <input id="place1" data-save value="거제도 포로수용소 유적공원">
+          </div>
+
+          <div class="field">
+            <label for="place1Address">주소 또는 검색어</label>
+            <input id="place1Address" data-save placeholder="주소를 입력하세요">
+          </div>
+
+          <div class="field full">
+            <label for="place1Description">장소 설명</label>
+            <input id="place1Description" data-save placeholder="방문 메모">
+          </div>
+        </div>
+
+        <div class="map-actions">
+          <button class="naver" data-action="search" data-service="naver" data-place-id="place1">네이버 검색</button>
+          <button class="kakao" data-action="search" data-service="kakao" data-place-id="place1">카카오 검색</button>
+          <button class="google" data-action="search" data-service="google" data-place-id="place1">구글 검색</button>
+          <button class="naver" data-action="direction" data-service="naver" data-place-id="place1">네이버 길찾기</button>
+          <button class="google" data-action="direction" data-service="google" data-place-id="place1">구글 길찾기</button>
+          <button class="copy" data-action="copy" data-place-id="place1">정보 복사</button>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-heading">
+          <span class="badge">장소 2</span>
+          <h3>관광지</h3>
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="place2">장소명</label>
+            <input id="place2" data-save value="거제 파노라마 케이블카">
+          </div>
+
+          <div class="field">
+            <label for="place2Address">주소 또는 검색어</label>
+            <input id="place2Address" data-save placeholder="주소를 입력하세요">
+          </div>
+
+          <div class="field full">
+            <label for="place2Description">장소 설명</label>
+            <input id="place2Description" data-save placeholder="방문 메모">
+          </div>
+        </div>
+
+        <div class="map-actions">
+          <button class="naver" data-action="search" data-service="naver" data-place-id="place2">네이버 검색</button>
+          <button class="kakao" data-action="search" data-service="kakao" data-place-id="place2">카카오 검색</button>
+          <button class="google" data-action="search" data-service="google" data-place-id="place2">구글 검색</button>
+          <button class="naver" data-action="direction" data-service="naver" data-place-id="place2">네이버 길찾기</button>
+          <button class="google" data-action="direction" data-service="google" data-place-id="place2">구글 길찾기</button>
+          <button class="copy" data-action="copy" data-place-id="place2">정보 복사</button>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-heading">
+          <span class="badge">장소 3</span>
+          <h3>해변 산책</h3>
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="place3">장소명</label>
+            <input id="place3" data-save value="거제도 해변 산책">
+          </div>
+
+          <div class="field">
+            <label for="place3Address">주소 또는 검색어</label>
+            <input id="place3Address" data-save placeholder="해변 이름 또는 주소">
+          </div>
+
+          <div class="field full">
+            <label for="place3Description">장소 설명</label>
+            <input id="place3Description" data-save placeholder="방문 메모">
+          </div>
+        </div>
+
+        <div class="map-actions">
+          <button class="naver" data-action="search" data-service="naver" data-place-id="place3">네이버 검색</button>
+          <button class="kakao" data-action="search" data-service="kakao" data-place-id="place3">카카오 검색</button>
+          <button class="google" data-action="search" data-service="google" data-place-id="place3">구글 검색</button>
+          <button class="naver" data-action="direction" data-service="naver" data-place-id="place3">네이버 길찾기</button>
+          <button class="google" data-action="direction" data-service="google" data-place-id="place3">구글 길찾기</button>
+          <button class="copy" data-action="copy" data-place-id="place3">정보 복사</button>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-heading">
+          <span class="badge">숙소</span>
+          <h3>한화리조트</h3>
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="place4">숙소명</label>
+            <input id="place4" data-save value="한화리조트 거제 벨버디어">
+          </div>
+
+          <div class="field">
+            <label for="place4Address">주소 또는 검색어</label>
+            <input id="place4Address" data-save placeholder="주소를 입력하세요">
+          </div>
+
+          <div class="field full">
+            <label for="place4Description">숙소 메모</label>
+            <input id="place4Description" data-save placeholder="체크인 안내 등">
+          </div>
+        </div>
+
+        <div class="map-actions">
+          <button class="naver" data-action="search" data-service="naver" data-place-id="accommodation">네이버 검색</button>
+          <button class="kakao" data-action="search" data-service="kakao" data-place-id="accommodation">카카오 검색</button>
+          <button class="google" data-action="search" data-service="google" data-place-id="accommodation">구글 검색</button>
+          <button class="naver" data-action="direction" data-service="naver" data-place-id="accommodation">네이버 길찾기</button>
+          <button class="google" data-action="direction" data-service="google" data-place-id="accommodation">구글 길찾기</button>
+          <button class="copy" data-action="copy" data-place-id="accommodation">정보 복사</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="number">3</span>
+        <h2>맛집투어 식당 후보</h2>
+      </div>
+
+      <p class="note">
+        식당 정보에 실제 지도 링크를 입력하면 지도 검색보다 해당 링크를 우선해서 엽니다.
+      </p>
+
+      <div class="restaurant-card">
+        <div class="restaurant-heading">
+          <span class="badge">후보 1 · 첫날 점심</span>
+          <h3>멍게비빔밥·성게비빔밥</h3>
+        </div>
+
+        <div class="grid three">
+          <div class="field">
+            <label for="restaurant1Name">이름·지점</label>
+            <input id="restaurant1Name" data-save value="백만석 · 거제 멍게비빔밥 후보">
+          </div>
+
+          <div class="field">
+            <label for="restaurant1Source">출처</label>
+            <input id="restaurant1Source" data-save value="현지 대표 메뉴·최근 지도 후기 확인 예정">
+          </div>
+
+          <div class="field">
+            <label for="restaurant1Date">확인일</label>
+            <input id="restaurant1Date" data-save placeholder="방문 전 확인일">
+          </div>
+
+          <div class="field full">
+            <label for="restaurant1Info">주소·미확인 정보·지도 링크</label>
+            <textarea id="restaurant1Info" data-save>거제 대표 멍게비빔밥 후보. 멍게비빔밥 외 생선구이·회덮밥·해산물 정식 메뉴 여부, 월요일 영업, 주차, 가족 4명 좌석, 30분 이내 대기 가능 여부와 지도 링크를 확인합니다.</textarea>
+          </div>
+        </div>
+
+        <div class="map-actions">
+          <button class="naver" data-action="search" data-service="naver" data-restaurant-id="restaurant1">네이버 검색</button>
+          <button class="kakao" data-action="search" data-service="kakao" data-restaurant-id="restaurant1">카카오 검색</button>
+          <button class="google" data-action="search" data-service="google" data-restaurant-id="restaurant1">구글 검색</button>
+          <button class="naver" data-action="direction" data-service="naver" data-restaurant-id="restaurant1">네이버 길찾기</button>
+          <button class="google" data-action="direction" data-service="google" data-restaurant-id="restaurant1">구글 길찾기</button>
+          <button class="copy" data-action="copy" data-restaurant-id="restaurant1">식당 정보 복사</button>
+        </div>
+      </div>
+
+      <div class="restaurant-card">
+        <div class="restaurant-heading">
+          <span class="badge">후보 2 · 첫날 저녁</span>
+          <h3>모둠회·해산물 모둠</h3>
+        </div>
+
+        <div class="grid three">
+          <div class="field">
+            <label for="restaurant2Name">이름·지점</label>
+            <input id="restaurant2Name" data-save value="장목·고현·장승포 지역 회·해산물 식당">
+          </div>
+
+          <div class="field">
+            <label for="restaurant2Source">출처</label>
+            <input id="restaurant2Source" data-save value="현지인 추천 및 최근 지도 후기 확인 예정">
+          </div>
+
+          <div class="field">
+            <label for="restaurant2Date">확인일</label>
+            <input id="restaurant2Date" data-save placeholder="방문 전 확인일">
+          </div>
+
+          <div class="field full">
+            <label for="restaurant2Info">주소·미확인 정보·지도 링크</label>
+            <textarea id="restaurant2Info" data-save>회만 주문하기보다 모둠회·해산물 모둠·매운탕 또는 식사 메뉴가 포함된 구성을 우선합니다. 벨버디어까지 운전시간, 주차, 대표 메뉴 가격, 월요일 저녁 영업, 대기시간과 지도 링크를 확인합니다.</textarea>
+          </div>
+        </div>
+
+        <div class="map-actions">
+          <button class="naver" data-action="search" data-service="naver" data-restaurant-id="restaurant2">네이버 검색</button>
+          <button class="kakao" data-action="search" data-service="kakao" data-restaurant-id="restaurant2">카카오 검색</button>
+          <button class="google" data-action="search" data-service="google" data-restaurant-id="restaurant2">구글 검색</button>
+          <button class="naver" data-action="direction" data-service="naver" data-restaurant-id="restaurant2">네이버 길찾기</button>
+          <button class="google" data-action="direction" data-service="google" data-restaurant-id="restaurant2">구글 길찾기</button>
+          <button class="copy" data-action="copy" data-restaurant-id="restaurant2">식당 정보 복사</button>
+        </div>
+      </div>
+
+      <div class="restaurant-card">
+        <div class="restaurant-heading">
+          <span class="badge">후보 3 · 둘째 날 아침</span>
+          <h3>대구탕·생선구이 백반</h3>
+        </div>
+
+        <div class="grid three">
+          <div class="field">
+            <label for="restaurant3Name">이름·지점</label>
+            <input id="restaurant3Name" data-save value="외포항·장목 일대 대구탕 식당">
+          </div>
+
+          <div class="field">
+            <label for="restaurant3Source">출처</label>
+            <input id="restaurant3Source" data-save value="거제 북부 겨울 대표 메뉴·최근 지도 후기 확인 예정">
+          </div>
+
+          <div class="field">
+            <label for="restaurant3Date">확인일</label>
+            <input id="restaurant3Date" data-save placeholder="방문 전 확인일">
+          </div>
+
+          <div class="field full">
+            <label for="restaurant3Info">주소·미확인 정보·지도 링크</label>
+            <textarea id="restaurant3Info" data-save>겨울 아침 메뉴로 대구탕을 우선 추천합니다. 대체 메뉴는 생선구이 백반·전복죽·해산물 된장찌개입니다. 화요일 아침 영업 여부, 주차, 대기시간, 벨버디어와의 거리 및 지도 링크를 확인합니다.</textarea>
+          </div>
+        </div>
+
+        <div class="map-actions">
+          <button class="naver" data-action="search" data-service="naver" data-restaurant-id="restaurant3">네이버 검색</button>
+          <button class="kakao" data-action="search" data-service="kakao" data-restaurant-id="restaurant3">카카오 검색</button>
+          <button class="google" data-action="search" data-service="google" data-restaurant-id="restaurant3">구글 검색</button>
+          <button class="naver" data-action="direction" data-service="naver" data-restaurant-id="restaurant3">네이버 길찾기</button>
+          <button class="google" data-action="direction" data-service="google" data-restaurant-id="restaurant3">구글 길찾기</button>
+          <button class="copy" data-action="copy" data-restaurant-id="restaurant3">식당 정보 복사</button>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top: 14px;">
+        <div class="field">
+          <label for="selectedRestaurant">내가 선택한 식당</label>
+          <input id="selectedRestaurant" data-save placeholder="확인 후 최종 선택">
+        </div>
+
+        <div class="field">
+          <label for="restaurantReason">선택한 이유</label>
+          <input id="restaurantReason" data-save value="맛과 현지인 추천을 우선하고, 가족 4명·주차·30분 이내 대기를 함께 고려">
+        </div>
+
+        <div class="field full">
+          <label for="snacks">간식 장소 · 식사와 구분</label>
+          <textarea id="snacks" data-save>한화리조트 거제 벨버디어 또는 장목·흥남해변 주변 바다 전망 카페. 유자차·유자 에이드·거제 특산물 디저트·베이커리·아이스크림을 후보로 둡니다.</textarea>
+
+          <div class="map-actions">
+            <button class="naver" data-action="search" data-service="naver" data-snack-id="snacks">네이버 검색</button>
+            <button class="kakao" data-action="search" data-service="kakao" data-snack-id="snacks">카카오 검색</button>
+            <button class="google" data-action="search" data-service="google" data-snack-id="snacks">구글 검색</button>
+            <button class="naver" data-action="direction" data-service="naver" data-snack-id="snacks">네이버 길찾기</button>
+            <button class="google" data-action="direction" data-service="google" data-snack-id="snacks">구글 길찾기</button>
+            <button class="copy" data-action="copy" data-snack-id="snacks">간식 정보 복사</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="number">4</span>
+        <h2>날짜별 일정과 방문 순서</h2>
+      </div>
+
+      <div class="day-card">
+        <h3>12월 28일(월) · 도착 및 주요 관광</h3>
+
+        <div class="timeline">
+          <div class="timeline-row">
+            <strong>오전~점심</strong>
+            <div class="schedule-line">
+              <input id="day1Morning" data-save value="출발 · 거제 이동 · 멍게비빔밥 또는 성게비빔밥 점심">
+              <button type="button" data-schedule-id="day1Morning">길찾기</button>
+            </div>
+          </div>
+
+          <div class="timeline-row">
+            <strong>오후</strong>
+            <div class="schedule-line">
+              <input id="day1Afternoon" data-save value="거제도 포로수용소 유적공원 방문">
+              <button type="button" data-schedule-id="day1Afternoon">길찾기</button>
+            </div>
+          </div>
+
+          <div class="timeline-row">
+            <strong>간식</strong>
+            <div class="schedule-line">
+              <input id="day1Snack" data-save value="장목·흥남해변 또는 벨버디어 바다 전망 카페 · 유자 디저트">
+              <button type="button" data-schedule-id="day1Snack">길찾기</button>
+            </div>
+          </div>
+
+          <div class="timeline-row">
+            <strong>저녁</strong>
+            <div class="schedule-line">
+              <input id="day1Evening" data-save value="모둠회·해산물 모둠·매운탕 · 한화리조트 거제 벨버디어 체크인 및 휴식">
+              <button type="button" data-schedule-id="day1Evening">길찾기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <h3>12월 29일(화) · 케이블카 및 해변 산책</h3>
+
+        <div class="timeline">
+          <div class="timeline-row">
+            <strong>아침</strong>
+            <div class="schedule-line">
+              <input id="day2Morning" data-save value="체크아웃 · 외포항·장목 일대 대구탕 또는 생선구이 백반">
+              <button type="button" data-schedule-id="day2Morning">길찾기</button>
+            </div>
+          </div>
+
+          <div class="timeline-row">
+            <strong>오전~점심</strong>
+            <div class="schedule-line">
+              <input id="day2Afternoon" data-save value="거제 파노라마 케이블카 · 회덮밥 또는 해물칼국수">
+              <button type="button" data-schedule-id="day2Afternoon">길찾기</button>
+            </div>
+          </div>
+
+          <div class="timeline-row">
+            <strong>오후</strong>
+            <div class="schedule-line">
+              <input id="day2Evening" data-save value="해변 걷기 · 카페 또는 간식 · 귀가">
+              <button type="button" data-schedule-id="day2Evening">길찾기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="rainPlan">우천 대안</label>
+        <textarea id="rainPlan" data-save>케이블카 운행 여부를 먼저 확인합니다. 비가 많이 오면 케이블카와 해변 산책을 줄이고, 포로수용소 관람 시간 조정 및 벨버디어·실내 카페·식당 중심으로 변경합니다.</textarea>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="number">5</span>
+        <h2>맛집투어 예산 계획</h2>
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <label for="foodBudget">식비 예상</label>
+          <input id="foodBudget" data-save value="약 18만~22만 원">
+        </div>
+
+        <div class="field">
+          <label for="budgetPlan">식사별 배분</label>
+          <textarea id="budgetPlan" data-save>첫날 점심 4만~7만 원 · 첫날 저녁 9만~13만 원 · 카페·간식 2만~4만 원 · 둘째 날 아침 3만~5만 원 · 둘째 날 점심 4만~7만 원</textarea>
+        </div>
+
+        <div class="field full">
+          <label for="budgetNote">예산 참고</label>
+          <textarea id="budgetNote" data-save>총예산 45만 원에 숙박비와 입장료가 포함되면 회 코스는 예산이 빠듯할 수 있으므로, 회 코스 대신 해산물 정식·회덮밥 중심으로 조정합니다.</textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="number">6</span>
+        <h2>준비물</h2>
+      </div>
+
+      <div class="checklist">
+        <label class="check-item">
+          <input type="checkbox" data-save id="item01">
+          <span><strong>TR-01 · 필수</strong> 운전면허증, 신분증, 결제수단</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox" data-save id="item02">
+          <span><strong>TR-02 · 차량</strong> 차량 점검, 주유, 충전기</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox" data-save id="item03">
+          <span><strong>TR-03 · 가족</strong> 아이 여벌옷, 개인 위생용품</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox" data-save id="item04">
+          <span><strong>TR-04 · 활동</strong> 편한 신발, 모자, 선크림</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox" data-save id="item05">
+          <span><strong>TR-05 · 겨울 날씨</strong> 패딩·겉옷, 우산 또는 우비</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox" data-save id="item06">
+          <span><strong>TR-06 · 맛집투어</strong> 물, 간식, 보조배터리</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="number">7</span>
+        <h2>출발 전 확인</h2>
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <label for="undecided">미정으로 남길 항목</label>
+          <textarea id="undecided" data-save>식당 최종 선택, 식당별 지도 링크, 해변 산책 장소, 세부 방문 시간, 카페 최종 선택</textarea>
+        </div>
+
+        <div class="field">
+          <label for="recheck">방문 전 재확인할 항목</label>
+          <textarea id="recheck" data-save>월요일·화요일 식당 영업 여부, 케이블카 운행 여부, 관광지 운영시간과 휴무일, 식당 주차 가능 여부, 최근 후기와 대기시간, 메뉴 가격, 날씨, 숙소 체크인 안내</textarea>
+        </div>
+
+        <div class="field full">
+          <label for="design">원하는 디자인</label>
+          <input id="design" data-save value="깔끔한 여행 노트">
+        </div>
+      </div>
+
+      <p class="note">
+        식당은 맛과 현지인 추천을 우선하되, 방문 직전에 영업 여부와 최근 후기를 확인하고 30분 이내 대기 가능한 곳으로 최종 결정합니다.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <span class="number">8</span>
+        <h2>공유 및 개발 정보</h2>
+      </div>
+
+      <div class="grid">
+        <div class="field full">
+          <label for="requestLocation">최종 개발 요청문 저장 위치</label>
+          <input id="requestLocation" data-save placeholder="예: Google Drive, Notion, GitHub 저장소 /docs">
+        </div>
+
+        <div class="field">
+          <label for="github">내 GitHub 저장소 주소</label>
+          <input id="github" data-save type="url" placeholder="https://github.com/사용자명/저장소명">
+        </div>
+
+        <div class="field">
+          <label for="pages">가족에게 공유할 Pages 주소</label>
+          <input id="pages" data-save type="url" placeholder="https://사용자명.github.io/저장소명/">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    거제도 가족 맛집투어 · 마지막 저장 상태는 이 브라우저에 보관됩니다.
+  </footer>
+
+  <div id="status" class="status" role="status"></div>
+
+  <script>
+    const STORAGE_KEY = "geoje-family-trip-record";
+    const fields = document.querySelectorAll("[data-save]");
+    const statusBox = document.getElementById("status");
+
+    function showStatus(message) {
+      statusBox.textContent = message;
+      statusBox.classList.add("show");
+
+      clearTimeout(window.statusTimer);
+      window.statusTimer = setTimeout(() => {
+        statusBox.classList.remove("show");
+      }, 2500);
+    }
+
+    function saveData(showMessage = false) {
+      const data = {};
+
+      fields.forEach((field) => {
+        data[field.id] = field.type === "checkbox"
+          ? field.checked
+          : field.value;
+      });
+
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      } catch (error) {
+        showStatus("브라우저에 내용을 저장하지 못했습니다.");
+      }
+
+      if (showMessage) {
+        showStatus("저장되었습니다.");
+      }
+    }
+
+    function loadData() {
+      let saved;
+
+      try {
+        saved = localStorage.getItem(STORAGE_KEY);
+      } catch (error) {
+        return;
+      }
+
+      if (!saved) {
+        return;
+      }
+
+      try {
+        const data = JSON.parse(saved);
+
+        fields.forEach((field) => {
+          if (!(field.id in data)) {
+            return;
+          }
+
+          if (field.type === "checkbox") {
+            field.checked = Boolean(data[field.id]);
+          } else {
+            field.value = data[field.id];
+          }
+        });
+      } catch (error) {
+        showStatus("저장된 여행 기록을 불러오지 못했습니다.");
+      }
+    }
+
+    function getValue(id) {
+      const element = document.getElementById(id);
+      return element ? element.value.trim() : "";
+    }
+
+    function getPlace(placeId) {
+      const nameId = placeId === "accommodation" ? "place4" : placeId;
+      const addressId = placeId === "accommodation"
+        ? "place4Address"
+        : placeId + "Address";
+      const descriptionId = placeId === "accommodation"
+        ? "place4Description"
+        : placeId + "Description";
+
+      return {
+        name: getValue(nameId),
+        address: getValue(addressId),
+        description: getValue(descriptionId),
+        mapLink: ""
+      };
+    }
+
+    function getRestaurant(restaurantId) {
+      const name = getValue(restaurantId + "Name");
+      const info = getValue(restaurantId + "Info");
+      const urlMatch = info.match(/https?:\/\/[^\s]+/);
+
+      return {
+        name,
+        address: "",
+        description: info,
+        mapLink: urlMatch ? urlMatch[0] : ""
+      };
+    }
+
+    function getSnack() {
+      const text = getValue("snacks");
+      const urlMatch = text.match(/https?:\/\/[^\s]+/);
+
+      return {
+        name: text,
+        address: "",
+        description: text,
+        mapLink: urlMatch ? urlMatch[0] : ""
+      };
+    }
+
+    function getMapQuery(place) {
+      return place.mapLink || place.address || place.name || "";
+    }
+
+    function openExternalUrl(url) {
+      if (!url) {
+        showStatus("열 수 있는 지도 주소가 없습니다.");
+        return;
+      }
+
+      const newWindow = window.open(url, "_blank");
+
+      if (!newWindow) {
+        window.location.href = url;
+      }
+    }
+
+    function openMap(service, place, direction = false) {
+      const query = getMapQuery(place);
+
+      if (!query) {
+        showStatus("장소명이나 주소를 먼저 입력해 주세요.");
+        return;
+      }
+
+      if (place.mapLink) {
+        openExternalUrl(place.mapLink);
+        return;
+      }
+
+      const encodedQuery = encodeURIComponent(query);
+      let url = "";
+
+      if (service === "naver") {
+        /*
+          네이버는 장소명만으로 목적지 좌표를 확정하는
+          길찾기 URL이 안정적이지 않으므로 검색 결과를 엽니다.
+        */
+        url = "https://map.naver.com/p/search/" + encodedQuery;
+      }
+
+      if (service === "kakao") {
+        url = "https://map.kakao.com/?q=" + encodedQuery;
+      }
+
+      if (service === "google") {
+        if (direction) {
+          url =
+            "https://www.google.com/maps/dir/?api=1&destination=" +
+            encodedQuery;
+        } else {
+          url =
+            "https://www.google.com/maps/search/?api=1&query=" +
+            encodedQuery;
+        }
+      }
+
+      if (!url) {
+        showStatus("지원하지 않는 지도 서비스입니다.");
+        return;
+      }
+
+      openExternalUrl(url);
+    }
+
+    function getPlaceFromButton(button) {
+      if (button.dataset.placeId) {
+        return getPlace(button.dataset.placeId);
+      }
+
+      if (button.dataset.restaurantId) {
+        const restaurant = getRestaurant(button.dataset.restaurantId);
+
+        if (!restaurant.name && !restaurant.mapLink) {
+          showStatus("식당 이름이나 주소를 먼저 입력해 주세요.");
+          return null;
+        }
+
+        return restaurant;
+      }
+
+      if (button.dataset.snackId) {
+        const snack = getSnack();
+
+        if (!snack.name && !snack.mapLink) {
+          showStatus("간식 장소나 카페 이름을 먼저 입력해 주세요.");
+          return null;
+        }
+
+        return snack;
+      }
+
+      return null;
+    }
+
+    function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text)
+          .then(() => {
+            showStatus("장소 정보가 복사되었습니다.");
+          })
+          .catch(() => {
+            fallbackCopy(text);
+          });
+
+        return;
+      }
+
+      fallbackCopy(text);
+    }
+
+    function fallbackCopy(text) {
+      const temporaryTextarea = document.createElement("textarea");
+
+      temporaryTextarea.value = text;
+      temporaryTextarea.style.position = "fixed";
+      temporaryTextarea.style.left = "-9999px";
+
+      document.body.appendChild(temporaryTextarea);
+      temporaryTextarea.focus();
+      temporaryTextarea.select();
+
+      try {
+        const copied = document.execCommand("copy");
+
+        if (copied) {
+          showStatus("장소 정보가 복사되었습니다.");
+        } else {
+          showStatus("복사하지 못했습니다. 직접 선택해 복사해 주세요.");
+        }
+      } catch (error) {
+        showStatus("복사하지 못했습니다. 직접 선택해 복사해 주세요.");
+      }
+
+      temporaryTextarea.remove();
+    }
+
+    function copyPlace(place) {
+      const text = [
+        "장소명: " + (place.name || "미입력"),
+        "주소: " + (place.address || "미입력"),
+        "설명: " + (place.description || "미입력"),
+        "지도 링크: " + (place.mapLink || "없음")
+      ].join("\n");
+
+      copyText(text);
+    }
+
+    function findSchedulePlace(text) {
+      const fixedPlaces = [
+        "거제도 포로수용소 유적공원",
+        "거제 파노라마 케이블카",
+        "한화리조트 거제 벨버디어",
+        "외포항",
+        "장목",
+        "흥남해변",
+        "거제도 해변 산책"
+      ];
+
+      const restaurantNames = [
+        getValue("restaurant1Name"),
+        getValue("restaurant2Name"),
+        getValue("restaurant3Name")
+      ].filter(Boolean);
+
+      const allPlaces = fixedPlaces.concat(restaurantNames);
+      const matchedPlace = allPlaces.find((place) => text.includes(place));
+
+      if (matchedPlace) {
+        return matchedPlace;
+      }
+
+      return text
+        .replace(
+          /출발|거제 이동|방문|점심|저녁|아침|식사|체크아웃|체크인|및|또는|귀가|·/g,
+          " "
+        )
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    document.querySelectorAll("[data-action]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const place = getPlaceFromButton(button);
+
+        if (!place) {
+          return;
+        }
+
+        const action = button.dataset.action;
+        const service = button.dataset.service;
+
+        if (action === "copy") {
+          copyPlace(place);
+          return;
+        }
+
+        if (action === "search") {
+          openMap(service, place, false);
+          return;
+        }
+
+        if (action === "direction") {
+          openMap(service, place, true);
+        }
+      });
+    });
+
+    document.querySelectorAll("[data-schedule-id]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const scheduleText = getValue(button.dataset.scheduleId);
+        const destination = findSchedulePlace(scheduleText);
+
+        if (!destination) {
+          showStatus("일정에 장소명을 먼저 입력해 주세요.");
+          return;
+        }
+
+        openMap(
+          "google",
+          {
+            name: destination,
+            address: "",
+            mapLink: ""
+          },
+          true
+        );
+      });
+    });
+
+    fields.forEach((field) => {
+      field.addEventListener("input", () => saveData(false));
+      field.addEventListener("change", () => saveData(false));
+    });
+
+    document.getElementById("saveButton").addEventListener("click", () => {
+      saveData(true);
+    });
+
+    document.getElementById("printButton").addEventListener("click", () => {
+      window.print();
+    });
+
+    document.getElementById("resetButton").addEventListener("click", () => {
+      const confirmed = confirm(
+        "저장된 내용을 모두 삭제하고 처음 상태로 되돌릴까요?"
+      );
+
+      if (!confirmed) {
+        return;
+      }
+
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (error) {
+        // localStorage를 사용할 수 없는 환경입니다.
+      }
+
+      window.location.reload();
+    });
+
+    loadData();
+  </script>
+</body>
+</html>
